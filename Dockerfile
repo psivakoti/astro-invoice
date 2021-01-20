@@ -1,9 +1,15 @@
 # Install Java
-FROM openjdk:14-jdk-slim
-# Build
-CMD ["./gradlew", "build"]
-ARG JAR_FILE=build/libs/*.jar
-# Change the jar file name to app.jar for ease of use
-COPY ${JAR_FILE} app.jar
-# Run the application. Springboot runs on port 8080 by default
-ENTRYPOINT ["java","-jar","/app.jar"]
+# Docker file for two phase build
+# Phase 1 - Build the application .jar file and name it builder
+FROM openjdk:11.0-jdk-slim as builder
+VOLUME /tmp
+COPY . .
+RUN ./gradlew build
+
+# Phase 2 - Build container with runtime only to use .jar file within
+FROM openjdk:11.0-jre-slim
+WORKDIR /app
+# Copy .jar file (aka, builder)
+COPY --from=builder build/libs/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
+EXPOSE 8080
