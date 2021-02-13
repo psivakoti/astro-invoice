@@ -1,9 +1,13 @@
 name: Heroku Deploy
 
 on:
-  push:
-    branches:
-      - master
+  status:
+    - success
+  workflow_run:
+    workflows: ["Gradle Build and Tests"]
+    branches: [master]
+    types:
+      - completed
 
 jobs:
   build:
