@@ -1,8 +1,7 @@
 name: Heroku Deploy
 
 on:
-  status:
-    - success
+  workflow_dispatch:
   workflow_run:
     workflows: ["Gradle Build and Tests"]
     branches: [master]
