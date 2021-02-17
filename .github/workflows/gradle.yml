@@ -5,7 +5,7 @@ name: Gradle Build and Tests
 
 on:
   pull_request:
-    branches: [ master ]
+    branches: [ herokuDeploy ]
   workflow_dispatch:
 
 jobs:
