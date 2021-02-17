@@ -1,6 +1,6 @@
 # Docker Sandwich
 
-An introduction to Docker.
+An introduction.
 
 ## Resources
 
