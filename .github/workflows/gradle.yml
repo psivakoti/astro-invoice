@@ -21,19 +21,5 @@ jobs:
           java-version: 1.11
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Build and test with Gradle
-        run: ./gradlew build
-  deploy:
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - needs: build
-      - uses: actions/checkout@v2
-      - name: Deploy to Heroku
-        uses: CDNievas/heroku-action@v1.0 # This is the action
-        with:
-          heroku_email: ${{secrets.HEROKU_LOGIN_EMAIL}}
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "sandwich_app"
-          appdir: /app
+      - name: Build, test and docker check
+        run: docker build -t sandwichsvc:dev .
